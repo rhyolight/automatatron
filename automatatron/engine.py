@@ -19,8 +19,20 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+import math
 
 
+def default_string_formatter(row, width):
+  side_padding = int(math.floor((width - len(row) )/ 2)) * " "
+  out = side_padding
+  for v in row:
+    if v:
+      cell = "#"
+    else:
+      cell  = " "
+    out += cell
+  out += side_padding
+  return out
 
 
 class Engine(object):
@@ -71,8 +83,20 @@ class Engine(object):
     return next_row
 
 
+  def retrieve(self, number):
+    return self.rows[number]
+
+
   def run(self, iterations):
     last_row = None
     for i in xrange(iterations):
       last_row = self.step()
     return last_row
+
+
+  def __str__(self, formatter=default_string_formatter):
+    out = ""
+    width = len(self.rows[-1])
+    for row in self.rows:
+      out = "%s\n%s" % (out, formatter(row, width))
+    return out

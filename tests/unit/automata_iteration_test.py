@@ -74,9 +74,41 @@ class Automata_Iteration_Test(unittest.TestCase):
 
   def test_retrieve_iteration(self):
     expected_first_row = [True]
+    expected_second_row = [True, True, True]
+    expected_third_row = [
+      True, True, False, False, True
+    ]
     automaton = Engine(30)
     automaton.run(10)
 
     first_row = automaton.retrieve(0)
+    second_row = automaton.retrieve(1)
+    third_row = automaton.retrieve(2)
 
     self.assertListEqual(first_row, expected_first_row)
+    self.assertListEqual(second_row, expected_second_row)
+    self.assertListEqual(third_row, expected_third_row)
+
+
+  def test_tostring(self):
+    expected_string = """
+          #          
+         ###         
+        ##  #        
+       ## ####       
+      ##  #   #      
+     ## #### ###     
+    ##  #    #  #    
+   ## ####  ######   
+  ##  #   ###     #  
+ ## #### ##  #   ### 
+##  #    # #### ##  #"""
+    automaton = Engine(30)
+    automaton.run(10)
+
+    output_string = automaton.__str__()
+    print "|"+expected_string+"|"
+    print "|"+output_string+"|"
+
+    self.assertEquals(expected_string, output_string)
+
