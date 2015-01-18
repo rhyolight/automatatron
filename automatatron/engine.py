@@ -27,14 +27,14 @@ class Engine(object):
 
 
   rules = [
-    [1, 1, 1],
-    [1, 1, 0],
-    [1, 0, 1],
-    [1, 0, 0],
-    [0, 1, 1],
-    [0, 1, 0],
-    [0, 0, 1],
-    [0, 0, 0],
+    [True,  True,  True],
+    [True,  True,  False],
+    [True,  False, True],
+    [True,  False, False],
+    [False, True,  True],
+    [False, True,  False],
+    [False, False, True],
+    [False, False, False],
   ]
 
 
@@ -48,6 +48,33 @@ class Engine(object):
     return rules
 
 
-  def __init__(self):
-    pass
+  def __init__(self, rule_number):
+    self.rule = self.get_rule(rule_number)
+    self.rows = [[True]]
 
+
+  def step(self):
+    next_row = []
+    last_row = list(self.rows[-1])
+    # Pad the row with two false values on each side. This allows us to more
+    # easily match the expected state with the upward row (which is now padded).
+    for i in xrange(2):
+      last_row.insert(0, False)
+      last_row.append(False)
+
+    for index, value in enumerate(last_row):
+      # skip first and last values (because of the padding)
+      if index == 0 or index == len(last_row) - 1:
+        continue
+      upward_state = last_row[index - 1 : index + 2]
+      match = upward_state in self.rule
+      next_row.append(match)
+    self.rows.append(next_row)
+    return next_row
+
+
+  def run(self, iterations):
+    last_row = None
+    for i in xrange(iterations):
+      last_row = self.step()
+    return last_row

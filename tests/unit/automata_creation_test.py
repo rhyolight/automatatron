@@ -23,27 +23,42 @@
 import unittest
 from automatatron import Engine
 
-class Rule_Construction_Test_Case(unittest.TestCase):
+class Automata_Creation_Test(unittest.TestCase):
 
 
-  def test_rule_30_construction(self):
-    expected = [
-      [1, 0, 0],
-      [0, 1, 1],
-      [0, 1, 0],
-      [0, 0, 1],
+  def test_automaton_creation_attaches_rule(self):
+    expected_rule = [
+      [True,  False, False],
+      [False, True,  True],
+      [False, True,  False],
+      [False, False, True],
     ]
-    rule = Engine.get_rule(30)
-    self.assertListEqual(rule, expected)
+    automaton = Engine(30)
+    self.assertListEqual(automaton.rule, expected_rule)
 
 
-  def test_rule_90_construction(self):
-    expected = [
-      [1, 1, 0],
-      [1, 0, 0],
-      [0, 1, 1],
-      [0, 0, 1],
+  def test_automaton_run_one_iteration(self):
+    expected_row = [
+      True, True, True
     ]
-    rule = Engine.get_rule(90)
-    self.assertListEqual(rule, expected)
+    automaton = Engine(30)
+    last_row = automaton.run(1)
+    self.assertListEqual(last_row, expected_row)
 
+
+  def test_automaton_run_two_iterations(self):
+    expected_row = [
+      True, True, False, False, True
+    ]
+    automaton = Engine(30)
+    last_row = automaton.run(2)
+    self.assertListEqual(last_row, expected_row)
+
+
+  def test_automaton_run_three_iterations(self):
+    expected_row = [
+      True, True, False, True, True, True, True
+    ]
+    automaton = Engine(30)
+    last_row = automaton.run(3)
+    self.assertListEqual(last_row, expected_row)
