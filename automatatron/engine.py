@@ -96,7 +96,7 @@ class Engine(object):
     for i in xrange(iterations):
       last_row = self.step()
       if handler:
-        handler(last_row)
+        handler(last_row, i)
     return last_row
 
 

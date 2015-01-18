@@ -92,24 +92,33 @@ class Automata_Iteration_Test(unittest.TestCase):
 
   def test_user_provided_iteration_handler_one_iteration(self):
     received_rows = []
-    def row_handler(row):
+    received_iteration = [None]
+    def row_handler(row, iteration):
       received_rows.append(row)
+      received_iteration[0] = iteration
     automaton = Engine(30)
 
     automaton.run(1, handler=row_handler)
 
+    self.assertEqual(0, received_iteration[0])
     self.assertEqual(1, len(received_rows), "Row handler was not called")
     self.assertListEqual([True, True, True], received_rows[0])
 
 
   def test_user_provided_iteration_handler_many_iterations(self):
     received_rows = []
-    def row_handler(row):
+    last_iteration = [None]
+
+    def row_handler(row, iteration):
+      print iteration
       received_rows.append(row)
+      last_iteration[0] = iteration
+
     automaton = Engine(30)
 
     automaton.run(10, handler=row_handler)
 
+    self.assertEqual(9, last_iteration[0])
     self.assertEqual(
       10, len(received_rows), 
       "Row handler was not called once for each new iteration output"
