@@ -90,6 +90,37 @@ class Automata_Iteration_Test(unittest.TestCase):
     self.assertListEqual(third_row, expected_third_row)
 
 
+  def test_user_provided_iteration_handler_one_iteration(self):
+    received_rows = []
+    def row_handler(row):
+      received_rows.append(row)
+    automaton = Engine(30)
+
+    automaton.run(1, handler=row_handler)
+
+    self.assertEqual(1, len(received_rows), "Row handler was not called")
+    self.assertListEqual([True, True, True], received_rows[0])
+
+
+  def test_user_provided_iteration_handler_many_iterations(self):
+    received_rows = []
+    def row_handler(row):
+      received_rows.append(row)
+    automaton = Engine(30)
+
+    automaton.run(10, handler=row_handler)
+
+    self.assertEqual(
+      10, len(received_rows), 
+      "Row handler was not called once for each new iteration output"
+    )
+    self.assertListEqual(
+      [True, True, False, False, True, False, False, False, False, True, False, 
+       True, True, True, True, False, True, True, False, False, True], 
+      received_rows[9]
+    )
+
+
   def test_tostring(self):
     expected_string = """Rule 30, 10 iterations:
           #          

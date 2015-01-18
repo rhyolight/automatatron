@@ -91,10 +91,12 @@ class Engine(object):
     return self.rows[number]
 
 
-  def run(self, iterations):
+  def run(self, iterations, handler=None):
     last_row = None
     for i in xrange(iterations):
       last_row = self.step()
+      if handler:
+        handler(last_row)
     return last_row
 
 
