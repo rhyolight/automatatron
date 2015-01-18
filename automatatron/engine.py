@@ -25,7 +25,6 @@
 
 class Engine(object):
 
-
   rules = [
     [True,  True,  True],
     [True,  True,  False],
@@ -36,7 +35,6 @@ class Engine(object):
     [False, False, True],
     [False, False, False],
   ]
-
 
   @classmethod
   def get_rule(cls, number):

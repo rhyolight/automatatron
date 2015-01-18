@@ -23,7 +23,7 @@
 import unittest
 from automatatron import Engine
 
-class Automata_Creation_Test(unittest.TestCase):
+class Automata_Iteration_Test(unittest.TestCase):
 
 
   def test_automaton_creation_attaches_rule(self):
