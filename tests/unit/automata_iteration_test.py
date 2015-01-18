@@ -91,7 +91,7 @@ class Automata_Iteration_Test(unittest.TestCase):
 
 
   def test_tostring(self):
-    expected_string = """
+    expected_string = """Rule 30, 10 iterations:
           #          
          ###         
         ##  #        
@@ -107,8 +107,6 @@ class Automata_Iteration_Test(unittest.TestCase):
     automaton.run(10)
 
     output_string = automaton.__str__()
-    print "|"+expected_string+"|"
-    print "|"+output_string+"|"
 
     self.assertEquals(expected_string, output_string)
 

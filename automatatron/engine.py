@@ -37,6 +37,8 @@ def default_string_formatter(row, width):
 
 class Engine(object):
 
+  # I'm sure there's a clever programmatic way to generate these rules, but I'm
+  # lazy.
   rules = [
     [True,  True,  True],
     [True,  True,  False],
@@ -59,6 +61,7 @@ class Engine(object):
 
 
   def __init__(self, rule_number):
+    self.rule_number = rule_number
     self.rule = self.get_rule(rule_number)
     self.rows = [[True]]
 
@@ -76,6 +79,7 @@ class Engine(object):
       # skip first and last values (because of the padding)
       if index == 0 or index == len(last_row) - 1:
         continue
+      # Upward state is the three cells above this one.
       upward_state = last_row[index - 1 : index + 2]
       match = upward_state in self.rule
       next_row.append(match)
@@ -95,7 +99,7 @@ class Engine(object):
 
 
   def __str__(self, formatter=default_string_formatter):
-    out = ""
+    out = "Rule %i, %i iterations:" % (self.rule_number, len(self.rows) - 1)
     width = len(self.rows[-1])
     for row in self.rows:
       out = "%s\n%s" % (out, formatter(row, width))
