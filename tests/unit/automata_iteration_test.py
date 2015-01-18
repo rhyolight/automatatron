@@ -33,32 +33,50 @@ class Automata_Iteration_Test(unittest.TestCase):
       [False, True,  False],
       [False, False, True],
     ]
+
     automaton = Engine(30)
+
     self.assertListEqual(automaton.rule, expected_rule)
 
 
-  def test_automaton_run_one_iteration(self):
+  def test_run_one_iteration(self):
     expected_row = [
       True, True, True
     ]
     automaton = Engine(30)
+
     last_row = automaton.run(1)
+
     self.assertListEqual(last_row, expected_row)
 
 
-  def test_automaton_run_two_iterations(self):
+  def test_run_two_iterations(self):
     expected_row = [
       True, True, False, False, True
     ]
     automaton = Engine(30)
+
     last_row = automaton.run(2)
+
     self.assertListEqual(last_row, expected_row)
 
 
-  def test_automaton_run_three_iterations(self):
+  def test_run_three_iterations(self):
     expected_row = [
       True, True, False, True, True, True, True
     ]
     automaton = Engine(30)
+
     last_row = automaton.run(3)
+
     self.assertListEqual(last_row, expected_row)
+
+
+  def test_retrieve_iteration(self):
+    expected_first_row = [True]
+    automaton = Engine(30)
+    automaton.run(10)
+
+    first_row = automaton.retrieve(0)
+
+    self.assertListEqual(first_row, expected_first_row)
