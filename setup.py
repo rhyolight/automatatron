@@ -43,7 +43,7 @@ sdict.update({
     "test_suite": "tests.unit",
     "packages" : ["automatatron"],
     "classifiers" : [
-        "Development Status :: 1 - Planning",
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
