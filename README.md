@@ -2,6 +2,10 @@
 
 Tool for creating and working with [Elementary Cellular Automaton](http://mathworld.wolfram.com/ElementaryCellularAutomaton.html).
 
+## Installation
+
+    pip install automatatron
+
 ## Examples
 
 ### Create All Possible Automaton
