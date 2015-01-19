@@ -22,7 +22,7 @@
 import math
 
 
-def default_string_formatter(row, width):
+def default_string_formatter(row, width=0):
   side_padding = int(math.floor((width - len(row) )/ 2)) * " "
   out = side_padding
   for v in row:
@@ -98,6 +98,23 @@ class Engine(object):
       if handler:
         handler(last_row, i)
     return last_row
+
+
+  def stream(self, handler, width=None):
+    while (True):
+      row = self.step()
+      if width is not None:
+        # Pad the row till it reaches the specified width
+        if width > len(row):
+          padding = int((width - len(row)) / 2)
+          for i in xrange(0, padding):
+            row.insert(0, False)
+            row.append(False)
+        # Trim the row to the center rows
+        half = int(math.floor(width/2))
+        midpoint = int(math.floor(len(row)/2))
+        row = row[midpoint - half : midpoint + half + 1]
+      handler(row, len(self.rows)-1)
 
 
   def __str__(self, formatter=default_string_formatter):

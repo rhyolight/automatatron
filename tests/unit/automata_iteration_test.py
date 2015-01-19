@@ -110,7 +110,6 @@ class Automata_Iteration_Test(unittest.TestCase):
     last_iteration = [None]
 
     def row_handler(row, iteration):
-      print iteration
       received_rows.append(row)
       last_iteration[0] = iteration
 
