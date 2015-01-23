@@ -91,17 +91,8 @@ class Engine(object):
     return self.rows[number]
 
 
-  def run(self, iterations, handler=None):
-    last_row = None
-    for i in xrange(iterations):
-      last_row = self.step()
-      if handler:
-        handler(last_row, i)
-    return last_row
-
-
-  def stream(self, handler, width=None):
-    while (True):
+  def run(self, handler=None, width=None, iterations=None):
+    def run_one_iteration():
       row = self.step()
       if width is not None:
         # Pad the row till it reaches the specified width
@@ -114,7 +105,15 @@ class Engine(object):
         half = int(math.floor(width/2))
         midpoint = int(math.floor(len(row)/2))
         row = row[midpoint - half : midpoint + half + 1]
-      handler(row, len(self.rows)-1)
+      if handler is not None:
+        handler(row, len(self.rows)-1)
+    
+    if iterations is None:
+      while True:
+        run_one_iteration()
+    else:
+      for i in xrange(iterations):
+        run_one_iteration()
 
 
   def __str__(self, formatter=default_string_formatter):
