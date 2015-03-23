@@ -6,6 +6,12 @@ Tool for creating and working with [Elementary Cellular Automaton](http://mathwo
 
     pip install automatatron
 
+## Command Line
+
+    ./run.py -r N
+
+Where `N` is the rule number. Default rule number is 30.
+
 ## Examples
 
 ### Create All Possible Automaton
